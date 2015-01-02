@@ -1,0 +1,23 @@
+---
+
+- name: set timezone
+  file:
+    dest="/etc/localtime"
+    src="/usr/share/zoneinfo/{{ ntp_timezone }}"
+    state=link
+    force=yes
+
+- name: install ntp
+  apt: pkg={{item}}
+  with_items:
+    - ntp
+    - ntpdate
+  notify: Set date and time
+
+- name: Use -u option in ntpdate
+  lineinfile:
+    dest=/etc/default/ntpdate
+    regexp='^NTPOPTIONS=".*"'
+    line='NTPOPTIONS="-u"'
+
+- meta: flush_handlers

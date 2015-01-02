@@ -1,0 +1,5 @@
+---
+
+## default timezone.
+# This should point to a file relative to /usr/share/zoneinfo.
+ntp_timezone: Europe/Paris
